@@ -1,8 +1,6 @@
 /node_modules/
 .idea/
-*.env
 .env
-*.env.*
 dist/
 build/
 
