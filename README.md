@@ -8,7 +8,7 @@ A sample Express app to demonstrate using Apollo GraphQL with Nexus and Prisma
 ### Set up `env`
 `cp .env.example .env`
 
-Edit datebase envs, etc
+Edit database envs, etc
 
 ### Set up prisma
 `npm run migrate`
