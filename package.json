@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only --respawn --no-notify src/server.ts",
     "build": "tsc",
+    "migrate" : "npx prisma migrate dev --name init --preview-feature",
     "test": "test"
   },
   "keywords": [
