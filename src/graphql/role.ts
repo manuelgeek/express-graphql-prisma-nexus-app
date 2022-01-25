@@ -1,4 +1,4 @@
-import { objectType } from 'nexus';
+import {extendType, inputObjectType, intArg, nonNull, objectType, stringArg} from 'nexus';
 
 export const Role = objectType({
   name: 'Role',
@@ -23,6 +23,34 @@ export const Role = objectType({
             where: { id: parent.id || undefined },
           })
           .skills();
+      },
+    });
+  },
+});
+
+export const RoleInputType = inputObjectType({
+  name: 'RoleInputType',
+  definition(t) {
+    t.nonNull.int('id')
+  }
+})
+
+export const RoleMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    // create a new company
+    t.nonNull.field('createRole', {
+      type: 'Role',
+      args: {
+        id: intArg(),
+        name: nonNull(stringArg()),
+      },
+      resolve(_root, args, ctx) {
+        return ctx.db.role.create({
+          data: {
+            name: args.name,
+          },
+        });
       },
     });
   },

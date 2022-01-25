@@ -1,4 +1,4 @@
-import { objectType } from 'nexus';
+import {arg, extendType, intArg, list, nonNull, objectType, stringArg} from 'nexus';
 
 export const Skill = objectType({
   name: 'Skill',
@@ -17,3 +17,27 @@ export const Skill = objectType({
     });
   },
 });
+
+export const SkillMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    // create a new company
+    t.nonNull.field('createSkill', {
+      type: 'Skill',
+      args: {
+        id: intArg(),
+        name: nonNull(stringArg()),
+        roleId: intArg(),
+      },
+      resolve(_root, args, ctx) {
+        return ctx.db.skill.create({
+          data: {
+            name: args.name,
+            roleId:  args.roleId,
+          },
+        });
+      },
+    });
+  },
+});
+

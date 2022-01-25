@@ -14,6 +14,9 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  RoleInputType: { // input type
+    id: number; // Int!
+  }
 }
 
 export interface NexusGenEnums {
@@ -37,6 +40,7 @@ export interface NexusGenObjects {
     roleId?: number | null; // Int
     website?: string | null; // String
   }
+  Mutation: {};
   Query: {};
   Role: { // root type
     id: number; // Int!
@@ -69,8 +73,17 @@ export interface NexusGenFieldTypes {
     roles: NexusGenRootTypes['Role'][]; // [Role!]!
     website: string | null; // String
   }
+  Mutation: { // field return type
+    createCompany: NexusGenRootTypes['Company']; // Company!
+    createRole: NexusGenRootTypes['Role']; // Role!
+    createSkill: NexusGenRootTypes['Skill']; // Skill!
+    deleteCompany: NexusGenRootTypes['Company'] | null; // Company
+    updateCompany: NexusGenRootTypes['Company'] | null; // Company
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    companies: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
+    company: NexusGenRootTypes['Company'] | null; // Company
+    roles: Array<NexusGenRootTypes['Role'] | null> | null; // [Role]
   }
   Role: { // field return type
     company: NexusGenRootTypes['Company'] | null; // Company
@@ -96,8 +109,17 @@ export interface NexusGenFieldTypeNames {
     roles: 'Role'
     website: 'String'
   }
+  Mutation: { // field return type name
+    createCompany: 'Company'
+    createRole: 'Role'
+    createSkill: 'Skill'
+    deleteCompany: 'Company'
+    updateCompany: 'Company'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    companies: 'Company'
+    company: 'Company'
+    roles: 'Role'
   }
   Role: { // field return type name
     company: 'Company'
@@ -113,6 +135,45 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createCompany: { // args
+      bio: string; // String!
+      contactPerson: string; // String!
+      email: string; // String!
+      id?: number | null; // Int
+      name: string; // String!
+      roleId?: number | null; // Int
+      roles?: Array<NexusGenInputs['RoleInputType'] | null> | null; // [RoleInputType]
+      website: string; // String!
+    }
+    createRole: { // args
+      id?: number | null; // Int
+      name: string; // String!
+    }
+    createSkill: { // args
+      id?: number | null; // Int
+      name: string; // String!
+      roleId?: number | null; // Int
+    }
+    deleteCompany: { // args
+      id: number; // Int!
+    }
+    updateCompany: { // args
+      bio?: string | null; // String
+      contactPerson?: string | null; // String
+      email?: string | null; // String
+      id: number; // Int!
+      name?: string | null; // String
+      roleId?: number | null; // Int
+      roles?: Array<NexusGenInputs['RoleInputType'] | null> | null; // [RoleInputType]
+      website?: string | null; // String
+    }
+  }
+  Query: {
+    company: { // args
+      id: number; // Int!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -123,7 +184,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 

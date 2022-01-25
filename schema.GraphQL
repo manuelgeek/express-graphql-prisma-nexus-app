@@ -13,8 +13,18 @@ type Company {
   website: String
 }
 
+type Mutation {
+  createCompany(bio: String!, contactPerson: String!, email: String!, id: Int, name: String!, roleId: Int, roles: [RoleInputType], website: String!): Company!
+  createRole(id: Int, name: String!): Role!
+  createSkill(id: Int, name: String!, roleId: Int): Skill!
+  deleteCompany(id: Int!): Company
+  updateCompany(bio: String, contactPerson: String, email: String, id: Int!, name: String, roleId: Int, roles: [RoleInputType], website: String): Company
+}
+
 type Query {
-  ok: Boolean!
+  companies: [Company]
+  company(id: Int!): Company
+  roles: [Role]
 }
 
 type Role {
@@ -22,6 +32,10 @@ type Role {
   id: Int!
   name: String
   skills: [Skill]
+}
+
+input RoleInputType {
+  id: Int!
 }
 
 type Skill {

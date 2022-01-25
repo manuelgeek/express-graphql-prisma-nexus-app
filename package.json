@@ -4,7 +4,7 @@
   "description": "A sample Express app to demonstrate using Apollo GraphQL with Nexus and Prisma",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only --no-notify src/server.ts",
+    "dev": "ts-node-dev --transpile-only --respawn --no-notify src/server.ts",
     "build": "tsc",
     "test": "test"
   },
