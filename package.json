@@ -2,9 +2,9 @@
   "name": "express-graphql-prisma-nexus-app",
   "version": "1.0.0",
   "description": "A sample Express app to demonstrate using Apollo GraphQL with Nexus and Prisma",
-  "main": "index.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only --no-notify api/app.ts",
+    "dev": "ts-node-dev --transpile-only --no-notify src/server.ts",
     "build": "tsc",
     "test": "test"
   },
