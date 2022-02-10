@@ -15,7 +15,8 @@ declare global {
 
 export interface NexusGenInputs {
   RoleInputType: { // input type
-    id: number; // Int!
+    id?: number | null; // Int
+    name?: string | null; // String
   }
 }
 

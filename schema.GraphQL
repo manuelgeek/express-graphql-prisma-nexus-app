@@ -35,7 +35,8 @@ type Role {
 }
 
 input RoleInputType {
-  id: Int!
+  id: Int
+  name: String
 }
 
 type Skill {

@@ -31,7 +31,8 @@ export const Role = objectType({
 export const RoleInputType = inputObjectType({
   name: 'RoleInputType',
   definition(t) {
-    t.nonNull.int('id')
+    t.nullable.int('id')
+    t.nullable.string('name')
   }
 })
 
