@@ -1,47 +1,54 @@
-import {extendType, inputObjectType, intArg, nonNull, objectType, stringArg} from 'nexus';
+import {
+  extendType,
+  inputObjectType,
+  intArg,
+  nonNull,
+  objectType,
+  stringArg,
+} from "nexus"
 
 export const Role = objectType({
-  name: 'Role',
+  name: "Role",
   definition(t) {
-    t.nonNull.int('id');
-    t.string('name');
-    t.field('company', {
-      type: 'Company',
+    t.nonNull.int("id")
+    t.string("name")
+    t.field("company", {
+      type: "Company",
       resolve: (parent, _, ctx) => {
         return ctx.db.role
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .company();
+          .company()
       },
-    });
-    t.list.field('skills', {
-      type: 'Skill',
+    })
+    t.list.field("skills", {
+      type: "Skill",
       resolve: (parent, _, ctx) => {
         return ctx.db.role
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .skills();
+          .skills()
       },
-    });
+    })
   },
-});
+})
 
 export const RoleInputType = inputObjectType({
-  name: 'RoleInputType',
+  name: "RoleInputType",
   definition(t) {
-    t.nullable.int('id')
-    t.nullable.string('name')
-  }
+    t.nullable.int("id")
+    t.nullable.string("name")
+  },
 })
 
 export const RoleMutation = extendType({
-  type: 'Mutation',
+  type: "Mutation",
   definition(t) {
     // create a new company
-    t.nonNull.field('createRole', {
-      type: 'Role',
+    t.nonNull.field("createRole", {
+      type: "Role",
       args: {
         id: intArg(),
         name: nonNull(stringArg()),
@@ -51,8 +58,8 @@ export const RoleMutation = extendType({
           data: {
             name: args.name,
           },
-        });
+        })
       },
-    });
+    })
   },
-});
+})

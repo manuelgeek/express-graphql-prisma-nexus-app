@@ -1,29 +1,37 @@
-import {arg, extendType, intArg, list, nonNull, objectType, stringArg} from 'nexus';
+import {
+  arg,
+  extendType,
+  intArg,
+  list,
+  nonNull,
+  objectType,
+  stringArg,
+} from "nexus"
 
 export const Skill = objectType({
-  name: 'Skill',
+  name: "Skill",
   definition(t) {
-    t.nonNull.int('id');
-    t.string('name');
-    t.field('role', {
-      type: 'Role',
+    t.nonNull.int("id")
+    t.string("name")
+    t.field("role", {
+      type: "Role",
       resolve: (parent, _, ctx) => {
         return ctx.db.skill
           .findUnique({
             where: { id: parent.id || undefined },
           })
-          .role();
+          .role()
       },
-    });
+    })
   },
-});
+})
 
 export const SkillMutation = extendType({
-  type: 'Mutation',
+  type: "Mutation",
   definition(t) {
     // create a new company
-    t.nonNull.field('createSkill', {
-      type: 'Skill',
+    t.nonNull.field("createSkill", {
+      type: "Skill",
       args: {
         id: intArg(),
         name: nonNull(stringArg()),
@@ -33,11 +41,10 @@ export const SkillMutation = extendType({
         return ctx.db.skill.create({
           data: {
             name: args.name,
-            roleId:  args.roleId,
+            roleId: args.roleId,
           },
-        });
+        })
       },
-    });
+    })
   },
-});
-
+})

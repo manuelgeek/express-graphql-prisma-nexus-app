@@ -1,65 +1,73 @@
-import {arg, extendType, intArg, list, nonNull, objectType, stringArg} from 'nexus';
+import {
+  arg,
+  extendType,
+  intArg,
+  list,
+  nonNull,
+  objectType,
+  stringArg,
+} from "nexus"
 
 export const Company = objectType({
-  name: 'Company',
+  name: "Company",
   definition(t) {
-    t.nonNull.int('id');
-    t.string('name');
-    t.string('contactPerson');
-    t.string('bio');
-    t.string('email');
-    t.string('website');
-    t.int('roleId');
-    t.nonNull.list.nonNull.field('roles', {
-      type: 'Role',
+    t.nonNull.int("id")
+    t.string("name")
+    t.string("contactPerson")
+    t.string("bio")
+    t.string("email")
+    t.string("website")
+    t.int("roleId")
+    t.nonNull.list.nonNull.field("roles", {
+      type: "Role",
       resolve: (parent, _, ctx) => {
         return ctx.db.company
           .findUnique({
             where: { id: parent.id },
           })
-          .roles();
+          .roles()
       },
-    });
+    })
   },
-});
+})
 
 export const CompanyQuery = extendType({
-  type: 'Query',
+  type: "Query",
   definition(t) {
     // get all companies
-    t.list.field('companies', {
-      type: 'Company',
+    t.list.field("companies", {
+      type: "Company",
       resolve(_root, _args, ctx) {
-        return ctx.db.company.findMany();
+        return ctx.db.company.findMany()
       },
-    });
+    })
     // get company by id
-    t.field('company', {
-      type: 'Company',
+    t.field("company", {
+      type: "Company",
       args: {
         id: nonNull(intArg()),
       },
       resolve(_root, args, ctx) {
         return ctx.db.company.findUnique({
           where: { id: args.id },
-        });
+        })
       },
-    });
-    t.list.field('roles', {
-      type: 'Role',
+    })
+    t.list.field("roles", {
+      type: "Role",
       resolve(_root, _args, ctx) {
-        return ctx.db.role.findMany();
+        return ctx.db.role.findMany()
       },
-    });
+    })
   },
-});
+})
 
 export const CompanyMutation = extendType({
-  type: 'Mutation',
+  type: "Mutation",
   definition(t) {
     // create a new company
-    t.nonNull.field('createCompany', {
-      type: 'Company',
+    t.nonNull.field("createCompany", {
+      type: "Company",
       args: {
         id: intArg(),
         name: nonNull(stringArg()),
@@ -69,7 +77,7 @@ export const CompanyMutation = extendType({
         website: nonNull(stringArg()),
         roleId: intArg(),
         roles: arg({
-          type: list('RoleInputType'),
+          type: list("RoleInputType"),
         }),
       },
       resolve(_root, args, ctx) {
@@ -83,16 +91,16 @@ export const CompanyMutation = extendType({
             roles: {
               connect: [{ id: args.roleId || undefined }],
               createMany: {
-                data: [{name: 'Admin'}]
-              }
+                data: [{ name: "Admin" }],
+              },
             },
           },
-        });
+        })
       },
-    });
+    })
     // update a company by id
-    t.field('updateCompany', {
-      type: 'Company',
+    t.field("updateCompany", {
+      type: "Company",
       args: {
         id: nonNull(intArg()),
         name: stringArg(),
@@ -102,7 +110,7 @@ export const CompanyMutation = extendType({
         website: stringArg(),
         roleId: intArg(),
         roles: arg({
-          type: list('RoleInputType'),
+          type: list("RoleInputType"),
         }),
       },
       resolve(_root, args, ctx) {
@@ -118,22 +126,20 @@ export const CompanyMutation = extendType({
               connect: [{ id: args.roleId || undefined }],
             },
           },
-        });
+        })
       },
-    });
+    })
     // delete a company by id
-    t.field('deleteCompany', {
-      type: 'Company',
+    t.field("deleteCompany", {
+      type: "Company",
       args: {
         id: nonNull(intArg()),
       },
       resolve(_root, args, ctx) {
         return ctx.db.company.delete({
           where: { id: args.id },
-        });
+        })
       },
-    });
+    })
   },
-});
-
-
+})
