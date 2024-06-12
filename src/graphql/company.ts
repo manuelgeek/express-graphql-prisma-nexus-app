@@ -90,9 +90,9 @@ export const CompanyMutation = extendType({
             website: args.website,
             roles: {
               connect: [{ id: args.roleId || undefined }],
-              createMany: {
-                data: [{ name: "Admin" }],
-              },
+              // createMany: {
+              //   data: [{ name: "Admin" }],
+              // },
             },
           },
         })

@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only --respawn --no-notify src/server.ts",
     "build": "tsc",
-    "migrate" : "npx prisma migrate dev --name init --preview-feature",
+    "migrate-dev" : "npx prisma migrate dev --schema src/prisma/schema.prisma",
+    "generate" : "npx prisma generate --schema src/prisma/schema.prisma",
+    "migrate-deploy" : "npx prisma migrate deploy --schema src/prisma/schema.prisma",
     "test": "test"
   },
   "keywords": [
